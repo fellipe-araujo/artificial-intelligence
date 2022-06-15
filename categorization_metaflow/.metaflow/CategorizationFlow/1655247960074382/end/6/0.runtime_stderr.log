@@ -1,0 +1,2 @@
+[MFLOG|0|2022-06-15T00:02:38.979613Z|runtime|d7d1c79e-215a-42a5-9e41-c8b77bfd1bd1]/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.7) or chardet (3.0.4) doesn't match a supported version!
+[MFLOG|0|2022-06-15T00:02:40.644442Z|runtime|5ed0912b-9a07-4eda-b5a9-0c31cb766a93]  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "

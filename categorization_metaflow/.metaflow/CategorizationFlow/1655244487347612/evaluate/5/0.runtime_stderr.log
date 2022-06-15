@@ -1,0 +1,32 @@
+[MFLOG|0|2022-06-14T22:55:36.179070Z|runtime|8230f633-8b07-400f-a1d3-eaeafaa420f9]/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.7) or chardet (3.0.4) doesn't match a supported version!
+[MFLOG|0|2022-06-14T22:55:37.609510Z|runtime|afcd68b8-117f-4d6e-9430-57d726379ebd]  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+[MFLOG|0|2022-06-14T22:55:37.609882Z|runtime|24dea1b1-28cc-4bd9-8d4e-80a24a832f10]<flow CategorizationFlow step evaluate> failed:
+[MFLOG|0|2022-06-14T22:55:37.615909Z|runtime|32b463a7-8074-49a1-bf66-a22891cd0c06]    Internal error
+[MFLOG|0|2022-06-14T22:55:37.617070Z|runtime|69149a72-261d-4d65-a891-7642505383c4]Traceback (most recent call last):
+[MFLOG|0|2022-06-14T22:55:37.617304Z|runtime|9053aa32-96f1-46b5-ae85-0949361c704a]  File "/home/fellipe/.local/lib/python3.8/site-packages/metaflow/cli.py", line 1101, in main
+[MFLOG|0|2022-06-14T22:55:37.617502Z|runtime|e64b7d1f-3a9d-4dde-950a-071acc83029d]    start(auto_envvar_prefix="METAFLOW", obj=state)
+[MFLOG|0|2022-06-14T22:55:37.617721Z|runtime|3f0f97e0-a408-4657-b1d6-42c35ea30df3]  File "/home/fellipe/.local/lib/python3.8/site-packages/metaflow/_vendor/click/core.py", line 829, in __call__
+[MFLOG|0|2022-06-14T22:55:37.617943Z|runtime|a0c60b05-aca6-4f80-bc6a-923d2dbff02b]    return self.main(args, kwargs)
+[MFLOG|0|2022-06-14T22:55:37.915151Z|runtime|0139fbb7-9362-4e8c-87c1-0e25090bfbb6]  File "/home/fellipe/.local/lib/python3.8/site-packages/metaflow/_vendor/click/core.py", line 782, in main
+[MFLOG|0|2022-06-14T22:55:37.915526Z|runtime|4a04a79b-1378-45e1-acb5-80f5e95cfe27]    rv = self.invoke(ctx)
+[MFLOG|0|2022-06-14T22:55:37.915750Z|runtime|fe0f2b7b-8382-4ce2-ab34-af555d9dcd15]  File "/home/fellipe/.local/lib/python3.8/site-packages/metaflow/_vendor/click/core.py", line 1259, in invoke
+[MFLOG|0|2022-06-14T22:55:37.915955Z|runtime|de84a60f-da61-43ca-a8a9-acf21749b6bd]    return _process_result(sub_ctx.command.invoke(sub_ctx))
+[MFLOG|0|2022-06-14T22:55:37.916158Z|runtime|c739bea8-3e57-4496-bb75-0974c2d6b924]  File "/home/fellipe/.local/lib/python3.8/site-packages/metaflow/_vendor/click/core.py", line 1066, in invoke
+[MFLOG|0|2022-06-14T22:55:37.916365Z|runtime|23e9d70f-08f4-48b1-b7df-0a987809a7a1]    return ctx.invoke(self.callback, ctx.params)
+[MFLOG|0|2022-06-14T22:55:37.916580Z|runtime|9751ca2f-cb8e-4be6-b107-80c590174193]  File "/home/fellipe/.local/lib/python3.8/site-packages/metaflow/_vendor/click/core.py", line 610, in invoke
+[MFLOG|0|2022-06-14T22:55:37.916780Z|runtime|d1f74522-9efb-43bf-875d-3dd6c021f2dd]    return callback(args, kwargs)
+[MFLOG|0|2022-06-14T22:55:37.916985Z|runtime|377bfd5a-e41a-4b5a-b43a-5a4fcdbb11d2]  File "/home/fellipe/.local/lib/python3.8/site-packages/metaflow/_vendor/click/decorators.py", line 21, in new_func
+[MFLOG|0|2022-06-14T22:55:37.917188Z|runtime|0cd43cd3-3104-4263-9b7a-db97f496a8f0]    return f(get_current_context(), args, kwargs)
+[MFLOG|0|2022-06-14T22:55:37.917385Z|runtime|0230c03c-e6d0-459a-b49f-a69b2d0c6307]  File "/home/fellipe/.local/lib/python3.8/site-packages/metaflow/cli.py", line 556, in step
+[MFLOG|0|2022-06-14T22:55:37.917565Z|runtime|6cb23f85-205f-4956-97f3-54840a54d484]    task.run_step(
+[MFLOG|0|2022-06-14T22:55:37.917728Z|runtime|f37c42d6-82d6-416b-9739-374ca2117af7]  File "/home/fellipe/.local/lib/python3.8/site-packages/metaflow/task.py", line 554, in run_step
+[MFLOG|0|2022-06-14T22:55:37.917894Z|runtime|f94a3fa9-f03f-4bea-b648-0a22e84c061b]    self._exec_step_function(step_func)
+[MFLOG|0|2022-06-14T22:55:37.918052Z|runtime|71580de7-3e19-44f6-9dc8-e5ca677cdf5a]  File "/home/fellipe/.local/lib/python3.8/site-packages/metaflow/task.py", line 53, in _exec_step_function
+[MFLOG|0|2022-06-14T22:55:37.918218Z|runtime|1170fa65-c26a-43e8-8fcc-069c6bcea96b]    step_function()
+[MFLOG|0|2022-06-14T22:55:37.918406Z|runtime|2e6d845c-3fea-4e53-910f-f6516797f704]  File "index.py", line 118, in evaluate
+[MFLOG|0|2022-06-14T22:55:37.918620Z|runtime|ded663e9-5429-4878-8a5a-a17ae635e326]    self.x_test = self.pipe.transform(self.x_train)
+[MFLOG|0|2022-06-14T22:55:37.918810Z|runtime|5cafca9a-d538-418e-bb65-346b2d66b094]  File "/home/fellipe/.local/lib/python3.8/site-packages/metaflow/flowspec.py", line 223, in __getattr__
+[MFLOG|0|2022-06-14T22:55:37.919008Z|runtime|443a0329-827a-4f57-9dad-6039a4a99cf3]    raise AttributeError("Flow %s has no attribute '%s'" % (self.name, name))
+[MFLOG|0|2022-06-14T22:55:37.919207Z|runtime|1d35e140-2403-4f42-99f9-8ac613c7d014]AttributeError: Flow CategorizationFlow has no attribute 'pipe'
+[MFLOG|0|2022-06-14T22:55:37.919407Z|runtime|6de4b298-4500-485a-ae65-47bc355feb23]
+[MFLOG|0|2022-06-14T22:55:37.920187Z|runtime|76f3b880-c776-439d-bdbf-469ace0847a9]Task failed.

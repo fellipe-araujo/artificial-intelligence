@@ -1,0 +1,1 @@
+{"flow_id": "CategorizationFlow", "run_number": "1655247960074382", "step_name": "load", "task_id": "2", "field_name": "attempt_ok", "type": "internal_attempt_status", "value": "True", "tags": ["attempt_id:0"], "user_name": "fellipe", "ts_epoch": 1655247971394}

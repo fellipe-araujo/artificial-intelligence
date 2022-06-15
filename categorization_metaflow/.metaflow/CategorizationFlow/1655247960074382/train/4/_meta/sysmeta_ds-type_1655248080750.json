@@ -1,0 +1,1 @@
+{"flow_id": "CategorizationFlow", "run_number": "1655247960074382", "step_name": "train", "task_id": "4", "field_name": "ds-type", "type": "ds-type", "value": "local", "tags": ["attempt_id:0"], "user_name": "fellipe", "ts_epoch": 1655248080750}

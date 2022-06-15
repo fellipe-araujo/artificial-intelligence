@@ -1,0 +1,20 @@
+[MFLOG|0|2022-06-15T00:02:25.016437Z|runtime|e2b70e60-ba0b-4e05-96dc-9b19e42a647d]                                  precision    recall  f1-score   support
+[MFLOG|0|2022-06-15T00:02:25.505268Z|runtime|b762077e-c75e-4f4f-a787-51c5655a79d8]
+[MFLOG|0|2022-06-15T00:02:25.505542Z|runtime|c7d00b54-3c3b-4a23-8505-32c953c0ea9c]          acordao_de_2_instancia       0.97      0.55      0.70       273
+[MFLOG|0|2022-06-15T00:02:25.505732Z|runtime|0371fadd-b57a-4f7a-bd0a-8c5ff6a2f924]agravo_em_recurso_extraordinario       0.85      0.12      0.22      1841
+[MFLOG|0|2022-06-15T00:02:25.505902Z|runtime|447f39e5-e3be-4d59-91a7-87809556ea95]     despacho_de_admissibilidade       0.98      0.22      0.36       198
+[MFLOG|0|2022-06-15T00:02:25.506067Z|runtime|2e12ad0f-0f35-43b9-bd80-9e97d412df36]                          outros       0.94      1.00      0.97     85408
+[MFLOG|0|2022-06-15T00:02:25.506226Z|runtime|a95b828d-21ed-4415-a62f-611114ad5a5a]                   peticao_do_RE       0.89      0.52      0.66      6331
+[MFLOG|0|2022-06-15T00:02:25.506384Z|runtime|a5790795-97b8-4deb-b27b-0f902dc23340]                        sentenca       0.95      0.55      0.70      1475
+[MFLOG|0|2022-06-15T00:02:25.506537Z|runtime|3ecd5a99-3a16-4be4-b36f-3168760514a0]
+[MFLOG|0|2022-06-15T00:02:25.506715Z|runtime|47405613-d344-45f4-b92c-e79b4d5ee53d]                        accuracy                           0.94     95526
+[MFLOG|0|2022-06-15T00:02:25.506871Z|runtime|0048d5c5-7feb-4c23-91d5-59aceac37020]                       macro avg       0.93      0.49      0.60     95526
+[MFLOG|0|2022-06-15T00:02:25.507023Z|runtime|962d81c2-3918-4f63-a4df-02bb56781285]                    weighted avg       0.93      0.94      0.93     95526
+[MFLOG|0|2022-06-15T00:02:25.507170Z|runtime|e952d0e0-fa88-461d-84b5-e04caf8b8cbe]
+[MFLOG|0|2022-06-15T00:02:25.507325Z|runtime|7dea91ae-83cc-4b12-b5c3-8c60b37fb2bd][[  149     0     0   124     0     0]
+[MFLOG|0|2022-06-15T00:02:26.373463Z|runtime|bbf3c557-6e73-4d36-81f2-53fdb2faafae] [    0   227     0  1518    96     0]
+[MFLOG|0|2022-06-15T00:02:26.373748Z|runtime|96db397e-889d-4227-b23a-d6c6e9ca33bf] [    0     0    43   155     0     0]
+[MFLOG|0|2022-06-15T00:02:26.373932Z|runtime|bd659f89-29cd-4c1e-a35a-0e0912aec09f] [    4    40     1 85018   310    35]
+[MFLOG|0|2022-06-15T00:02:26.374096Z|runtime|27e50b5e-b47d-4848-8a99-f761927a4de4] [    1     0     0  3012  3310     8]
+[MFLOG|0|2022-06-15T00:02:26.374256Z|runtime|5de4447e-4a1f-465b-b484-1d45ed2328be] [    0     0     0   662     0   813]]
+[MFLOG|0|2022-06-15T00:02:26.374422Z|runtime|c2a9082c-794d-4e7a-9003-a47cea166f93]F1 Score (micro): 0.9375457990494734
