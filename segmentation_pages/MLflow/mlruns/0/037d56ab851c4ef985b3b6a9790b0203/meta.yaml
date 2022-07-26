@@ -1,0 +1,15 @@
+artifact_uri: file:///home/fellipe/Documentos/AI.Lab/artificial-intelligence/segmentation_pages/MLflow/mlruns/0/037d56ab851c4ef985b3b6a9790b0203/artifacts
+end_time: 1658413337634
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 037d56ab851c4ef985b3b6a9790b0203
+run_uuid: 037d56ab851c4ef985b3b6a9790b0203
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1658413335182
+status: 3
+tags: []
+user_id: fellipe
