@@ -1,0 +1,33 @@
+{
+  "tobacco800_input_3_classes_4_nn_effnetB0_FT_Layer11": {
+    "NextPage": {
+      "precision": 0.8125,
+      "recall": 0.7358490566037735,
+      "f1-score": 0.7722772277227722,
+      "support": 106
+    },
+    "FirstPage": {
+      "precision": 0.8282208588957055,
+      "recall": 0.8823529411764706,
+      "f1-score": 0.8544303797468354,
+      "support": 153
+    },
+    "accuracy": 0.8223938223938224,
+    "macro avg": {
+      "precision": 0.8203604294478528,
+      "recall": 0.8091009988901221,
+      "f1-score": 0.8133538037348038,
+      "support": 259
+    },
+    "weighted avg": {
+      "precision": 0.8217868394248762,
+      "recall": 0.8223938223938224,
+      "f1-score": 0.8208078542080297,
+      "support": 259
+    },
+    "valid_acc": 0.7901785714285714,
+    "valid_kappa": 0.5824676921503539,
+    "test_acc": 0.8402777777777778,
+    "test_kappa": 0.6620742667913581
+  }
+}
