@@ -1,0 +1,16 @@
+channels:
+- conda-forge
+dependencies:
+- python=3.8.10
+- pip<=20.0.2
+- pip:
+  - mlflow
+  - cffi==1.15.0
+  - cloudpickle==2.1.0
+  - defusedxml==0.7.1
+  - efficientnet-pytorch==0.7.1
+  - ipython==8.4.0
+  - scikit-learn==1.1.1
+  - torchvision==0.13.0
+  - tqdm==4.64.0
+name: mlflow-env

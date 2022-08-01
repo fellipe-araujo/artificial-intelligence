@@ -257,9 +257,7 @@ def plot_images(images, labels, classes, file_names, normalize = True):
                      f'{file_names[i]}')   
         ax.axis('off')
 
-def config_params():
-  model = define_model()
-
+def config_params(model):
   params = [
             {'params': model.base_model.parameters(), 'lr': FOUND_LR / 10},
             {'params': model.classifier.parameters()}
@@ -419,7 +417,7 @@ def get_predictions(model, iterator, device):
 
 def main():
   set_seeds()
-  
+  model = define_model()
   transform = data_processing()
 
   df_train = pd.read_csv(TRAIN_LABEL_PATH, sep=';', skiprows=0, low_memory=False)
@@ -455,7 +453,7 @@ def main():
   valid_iterator = data.DataLoader(valid_data, batch_size = BATCH_SIZE)
   test_iterator = data.DataLoader(test_data, batch_size = BATCH_SIZE)
 
-  params, optimizer, scheduler, device, criterion, model = config_params()
+  params, optimizer, scheduler, device, criterion, model = config_params(model)
 
   EPOCHS = 20
   best_valid_loss = float('inf')
@@ -497,6 +495,8 @@ def main():
   images, labels, probs, file_names = get_predictions(model, test_iterator, device)
   pred_labels = torch.div(torch.argmax(probs, 1), 2, rounding_mode='floor')
 
+  classes = {'NextPage':0, 'FirstPage':1}
+
   def report():
     report_file_path = './report_final.json'
     export_report(EXPERIMENT, 
@@ -511,7 +511,7 @@ def main():
                 test_kappa_2, 
                 report_file_path)
     
-#   report = report()
+  report = report()
 
   with mlflow.start_run():
     mlflow.log_param('DATA', DATA)
@@ -530,7 +530,19 @@ def main():
     mlflow.log_metric('val_kappa', test_kappa)
     mlflow.log_metric('val_acc_2', test_acc_2)
     mlflow.log_metric('val_kappa_2', test_kappa_2)
-    # mlflow.log_params(report.tobacco800_input_3_classes_4_nn_effnetB0_FT_Layer11)
+    mlflow.log_metric('train_loss', train_loss)
+    mlflow.log_metric('valid_loss', valid_loss)
+    mlflow.log_metric('train_acc', train_acc)
+    mlflow.log_metric('valid_acc', valid_acc)
+    mlflow.log_metric('train_kappa', train_kappa)
+    mlflow.log_metric('valid_kappa', valid_kappa)
+    mlflow.log_metric('train_acc_2', train_acc_2)
+    mlflow.log_metric('valid_acc_2', valid_acc_2)
+    mlflow.log_metric('train_kappa_2', train_kappa_2)
+    mlflow.log_metric('valid_kappa_2', valid_kappa_2)
+    mlflow.log_metric('start', start)
+    mlflow.log_metric('end', end)
+    mlflow.log_params(report[next(iter(report))])
 
 
     tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
