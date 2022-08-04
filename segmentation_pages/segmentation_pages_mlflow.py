@@ -1,3 +1,5 @@
+import requests
+
 import torch
 import torch.nn as nn
 # import torch.nn.functional as F
@@ -38,6 +40,7 @@ import cv2
 import math
 
 import re
+import sys
 
 from utils import export_report
 from nn_modules import ThreePagesEffModule
@@ -417,7 +420,22 @@ def get_predictions(model, iterator, device):
 
 def main():
   set_seeds()
-  model = define_model()
+#   model = ''
+
+  if len(sys.argv) < 2:
+    print('O modelo será treinado!')
+    model = define_model()
+  else:
+    print('O modelo será recuperado!')
+    base_url = 'http://localhost:5000/api/2.0'
+    endpoint = base_url + '/mlflow/artifacts/list'
+    # 2cbd258b51b14cb1be87411b3f3b52a6
+    response = requests.get(endpoint, { 'run_id': sys.argv[1] })
+    model_path = response.json()['root_uri'] + '/' + response.json()['files'][0]['path']
+    model = pd.read_pickle(model_path + '/' + 'model.pkl')
+    # /home/fellipe/Documentos/AI.Lab/artificial-intelligence/segmentation_pages/data_files/test.csv
+    TEST_LABEL_PATH = sys.argv[2]
+
   transform = data_processing()
 
   df_train = pd.read_csv(TRAIN_LABEL_PATH, sep=';', skiprows=0, low_memory=False)
@@ -459,29 +477,30 @@ def main():
   best_valid_loss = float('inf')
   experiment_data = []
 
-  for epoch in range(EPOCHS):
-      start_time = time.monotonic()
-      
-      train_loss, train_acc, train_kappa, train_acc_2, train_kappa_2 = train(model, train_iterator, optimizer, criterion, device)
-      valid_loss, valid_acc, valid_kappa, valid_acc_2, valid_kappa_2 = evaluate(model, valid_iterator, criterion, device)
-          
-      if valid_loss < best_valid_loss:
-          best_valid_loss = valid_loss
-          print (f'Winner Epoch: {epoch+1:02}.')
-          torch.save(model.state_dict(), MODEL_PATH + EXPERIMENT + '.pt')
+  if len(sys.argv) < 2:
+    for epoch in range(EPOCHS):
+        start_time = time.monotonic()
+        
+        train_loss, train_acc, train_kappa, train_acc_2, train_kappa_2 = train(model, train_iterator, optimizer, criterion, device)
+        valid_loss, valid_acc, valid_kappa, valid_acc_2, valid_kappa_2 = evaluate(model, valid_iterator, criterion, device)
+            
+        if valid_loss < best_valid_loss:
+            best_valid_loss = valid_loss
+            print (f'Winner Epoch: {epoch+1:02}.')
+            torch.save(model.state_dict(), MODEL_PATH + EXPERIMENT + '.pt')
 
-      scheduler.step(valid_loss)
-      end_time = time.monotonic()
-      epoch_mins, epoch_secs = epoch_time(start_time, end_time)
-      
-      print(f'Epoch: {epoch+1:02} | Epoch Time: {epoch_mins}m {epoch_secs}s')
-      print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc*100:.2f}% | Train Kappa: {train_kappa*100:.2f}% | Train Acc 2: {train_acc_2*100:.2f}% | Train Kappa 2: {train_kappa_2*100:.2f}%')
-      print(f'\t Val. Loss: {valid_loss:.3f} |  Val. Acc: {valid_acc*100:.2f}% |  Val. Kappa: {valid_kappa*100:.2f}% |  Val. Acc 2: {valid_acc_2*100:.2f}% |  Val. Kappa 2: {valid_kappa_2*100:.2f}%')
+        scheduler.step(valid_loss)
+        end_time = time.monotonic()
+        epoch_mins, epoch_secs = epoch_time(start_time, end_time)
+        
+        print(f'Epoch: {epoch+1:02} | Epoch Time: {epoch_mins}m {epoch_secs}s')
+        print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc*100:.2f}% | Train Kappa: {train_kappa*100:.2f}% | Train Acc 2: {train_acc_2*100:.2f}% | Train Kappa 2: {train_kappa_2*100:.2f}%')
+        print(f'\t Val. Loss: {valid_loss:.3f} |  Val. Acc: {valid_acc*100:.2f}% |  Val. Kappa: {valid_kappa*100:.2f}% |  Val. Acc 2: {valid_acc_2*100:.2f}% |  Val. Kappa 2: {valid_kappa_2*100:.2f}%')
 
-      experiment_data.append([train_loss, valid_loss, train_acc, valid_acc, train_kappa, valid_kappa, train_acc_2, valid_acc_2, train_kappa_2, valid_kappa_2, start_time, end_time])
-      experiment_df = pd.DataFrame(experiment_data,columns=['train_loss','valid_loss','train_acc', 'valid_acc','train_kappa', 'valid_kappa', 'train_acc_2', 'valid_acc_2', 'train_kappa_2', 'valid_kappa_2', 'start', 'end' ])
-      experiment_df.to_pickle(MODEL_PATH + EXPERIMENT+ '.pk')
-  
+        experiment_data.append([train_loss, valid_loss, train_acc, valid_acc, train_kappa, valid_kappa, train_acc_2, valid_acc_2, train_kappa_2, valid_kappa_2, start_time, end_time])
+        experiment_df = pd.DataFrame(experiment_data,columns=['train_loss','valid_loss','train_acc', 'valid_acc','train_kappa', 'valid_kappa', 'train_acc_2', 'valid_acc_2', 'train_kappa_2', 'valid_kappa_2', 'start', 'end' ])
+        experiment_df.to_pickle(MODEL_PATH + EXPERIMENT+ '.pk')
+
   experiment_df = pd.read_pickle(MODEL_PATH + EXPERIMENT + '.pk')
 
   print(EXPERIMENT)
@@ -498,7 +517,7 @@ def main():
   classes = {'NextPage':0, 'FirstPage':1}
 
   def report():
-    report_file_path = './report_final.json'
+    report_file_path = './report_final_new_data.json' if len(sys.argv) == 3 else './report_final.json'
     export_report(EXPERIMENT, 
                 labels, 
                 pred_labels, 
@@ -513,50 +532,53 @@ def main():
     
   report = report()
 
-  with mlflow.start_run():
-    mlflow.log_param('DATA', DATA)
-    mlflow.log_param('INPUT_DIM', INPUT_DIM)
-    mlflow.log_param('OUTPUT_DIM', OUTPUT_DIM)
-    mlflow.log_param('OUTPUT_METRIC', OUTPUT_METRIC)
-    mlflow.log_param('NN', NN)
-    mlflow.log_param('FINETUNNING', FINETUNNING)
-    mlflow.log_param('SEED', SEED)
-    mlflow.log_param('N_IMAGES', N_IMAGES)
-    mlflow.log_param('BATCH_SIZE', BATCH_SIZE)
-    mlflow.log_param('FOUND_LR', FOUND_LR)
-    mlflow.log_param('EPOCHS', EPOCHS)
-    mlflow.log_metric('val_loss', test_loss)
-    mlflow.log_metric('val_acc', test_acc)
-    mlflow.log_metric('val_kappa', test_kappa)
-    mlflow.log_metric('val_acc_2', test_acc_2)
-    mlflow.log_metric('val_kappa_2', test_kappa_2)
-    mlflow.log_metric('train_loss', train_loss)
-    mlflow.log_metric('valid_loss', valid_loss)
-    mlflow.log_metric('train_acc', train_acc)
-    mlflow.log_metric('valid_acc', valid_acc)
-    mlflow.log_metric('train_kappa', train_kappa)
-    mlflow.log_metric('valid_kappa', valid_kappa)
-    mlflow.log_metric('train_acc_2', train_acc_2)
-    mlflow.log_metric('valid_acc_2', valid_acc_2)
-    mlflow.log_metric('train_kappa_2', train_kappa_2)
-    mlflow.log_metric('valid_kappa_2', valid_kappa_2)
-    mlflow.log_metric('start', start)
-    mlflow.log_metric('end', end)
-    mlflow.log_params(report[next(iter(report))])
+  if len(sys.argv) == 3:
+    with mlflow.start_run():
+        mlflow.log_param('DATA', DATA)
+        mlflow.log_param('INPUT_DIM', INPUT_DIM)
+        mlflow.log_param('OUTPUT_DIM', OUTPUT_DIM)
+        mlflow.log_param('OUTPUT_METRIC', OUTPUT_METRIC)
+        mlflow.log_param('NN', NN)
+        mlflow.log_param('FINETUNNING', FINETUNNING)
+        mlflow.log_param('SEED', SEED)
+        mlflow.log_param('N_IMAGES', N_IMAGES)
+        mlflow.log_param('BATCH_SIZE', BATCH_SIZE)
+        mlflow.log_param('FOUND_LR', FOUND_LR)
+        mlflow.log_param('EPOCHS', EPOCHS)
+        mlflow.log_metric('val_loss', test_loss)
+        mlflow.log_metric('val_acc', test_acc)
+        mlflow.log_metric('val_kappa', test_kappa)
+        mlflow.log_metric('val_acc_2', test_acc_2)
+        mlflow.log_metric('val_kappa_2', test_kappa_2)
+        mlflow.log_metric('train_loss', train_loss)
+        mlflow.log_metric('valid_loss', valid_loss)
+        mlflow.log_metric('train_acc', train_acc)
+        mlflow.log_metric('valid_acc', valid_acc)
+        mlflow.log_metric('train_kappa', train_kappa)
+        mlflow.log_metric('valid_kappa', valid_kappa)
+        mlflow.log_metric('train_acc_2', train_acc_2)
+        mlflow.log_metric('valid_acc_2', valid_acc_2)
+        mlflow.log_metric('train_kappa_2', train_kappa_2)
+        mlflow.log_metric('valid_kappa_2', valid_kappa_2)
+        mlflow.log_metric('start', start)
+        mlflow.log_metric('end', end)
+        mlflow.log_params(report[next(iter(report))])
 
 
-    tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
+        tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
 
-    # Model registry does not work with file store
-    if tracking_url_type_store != "file":
+        # Model registry does not work with file store
+        if tracking_url_type_store != "file":
 
-        # Register the model
-        # There are other ways to use the Model Registry, which depends on the use case,
-        # please refer to the doc for more information:
-        # https://mlflow.org/docs/latest/model-registry.html#api-workflow
-        mlflow.sklearn.log_model(model, "model", registered_model_name="SegmentationPage")
-    else:
-        mlflow.sklearn.log_model(model, "model")
+            # Register the model
+            # There are other ways to use the Model Registry, which depends on the use case,
+            # please refer to the doc for more information:
+            # https://mlflow.org/docs/latest/model-registry.html#api-workflow
+            mlflow.sklearn.log_model(model, "model", registered_model_name="SegmentationPage")
+        else:
+            mlflow.sklearn.log_model(model, "model")
+
+
   
 if __name__ == "__main__":
   main()
