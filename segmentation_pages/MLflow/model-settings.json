@@ -1,0 +1,1 @@
+{"name": "wine-classifier", "implementation": "mlserver_mlflow.MLflowRuntime", "parameters": {"uri": "/home/fellipe/Documentos/AI.Lab/artificial-intelligence/segmentation_pages/MLflow/mlruns/0/037d56ab851c4ef985b3b6a9790b0203/artifacts/model"}}
