@@ -9,13 +9,13 @@ Este tutorial usa um conjunto de dados para prever a qualidade do vinho com base
 
 Para executar o tutorial de exemplo, basta rodar o seguinte comando:
 
-```py
+```bash
 python3 sklearn_elasticnet_wine/train.py
 ```
 
 É possível passar outros valores para os parâmetros alpha e l1_ratio:
 
-```py
+```bash
 python3 sklearn_elasticnet_wine/train.py <alpha> <l1_ratio>
 ```
 
@@ -25,7 +25,7 @@ python3 sklearn_elasticnet_wine/train.py <alpha> <l1_ratio>
 
 Para a comparação dos modelos produzidos, o MLflow disponibiliza uma interface de usuário. Estando no mesmo diretório que contém o `/mlruns`, execute o seguinte comando:
 
-```py
+```bash
 mlflow ui
 ```
 
@@ -37,12 +37,12 @@ Para obter a predição de novos dados utilizando o MLServer - Seldon, será mos
 2) No arquivo `config_model_settings.py` na **linha 21**, defina o caminho para o modelo desejado;
 3) É preciso criar um arquivo de configuração a respeito do modelo que se quer utilizar e, em seguida, executar o *mlserver* para deixá-lo pronto para receber inferências. Para isto, execute o código abaixo:
 
-```py
+```bash
 python3 config_model_settings.py <model_id> & mlserver start .
 ```
 
 4) Em um segundo terminal, execute o arquivo responsável por fazer a inferência de novos dados com o seguinte comando:
 
-```py
+```bash
 python3 inference_request.py
 ```
